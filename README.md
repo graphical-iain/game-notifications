@@ -1,3 +1,20 @@
-# Game Style Notifications from a CSV
+# FPS Notifications
 
-This is a test project that takes in a CSV and displays the rows by priority and a given starting delay.
+Website written with React & allowing for CSV uploads in `<Text>,<Priority>,<Duration>,<Start Time>` format.
+
+> E.G. Headshot,3,200,5000
+
+<br>
+
+### Working Example
+[iain.design/demos/game-notifications](https://iain.design/demos/game-notifications)
+
+### Notes
+
+- I used the base setup from create-react-app.
+
+- My test data CSV is located in /src/assets
+
+- I made the prominence of the messages much more than what it would be if they were in a full HUD.
+
+- I assumed there would be no header row in the CSV, but if it’s included it will be ignored.
