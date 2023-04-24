@@ -73,6 +73,8 @@ small {
   text-decoration: underline;
   color: inherit;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .inline-button:hover,
