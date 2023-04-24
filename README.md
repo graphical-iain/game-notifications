@@ -1,13 +1,17 @@
 # FPS Notifications
 
-Website written with React & allowing for CSV uploads in `<Text>,<Priority>,<Duration>,<Start Time>` format.
+Website written with React & allowing for CSV uploads in the following format:
 
-> E.G. Headshot,3,200,5000
+`<Text>,<Priority>,<Duration>,<Start Time>`
+
+e.g.
+> Headshot,3,200,2000
+
 
 <br>
 
 ### Working Example
-[iain.design/demos/game-notifications](https://iain.design/demos/game-notifications)
+[iain.design/demos/game-notifications](https://iain.design/demos/game-notifications/)
 
 ### Notes
 
