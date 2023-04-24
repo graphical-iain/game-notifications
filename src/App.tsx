@@ -5,6 +5,7 @@ import { Dropzone } from './helpers/dropzone';
 import { loadCSV, parseCSV } from './helpers/helpers';
 import { Row } from './helpers/types';
 
+// time in between ticks, in ms.
 const tickRate = 100;
 
 function App() {
@@ -17,7 +18,10 @@ function App() {
   const [messagesShown, setMessagesShown] = useState<number>(0);
   const body = document.querySelector('body');
 
+
+  // to ensure all items are displayed, we'll use a time ticker
   useEffect(() => {
+    // every tick verify we should continue ticking
     if (startTick) {
       body?.classList.add('going-through-list');
       setTimeout(() => { setTick(tick + tickRate); }, tickRate);
@@ -26,6 +30,18 @@ function App() {
     }
   }, [tick, startTick, body]);
 
+  // when there are messages in the queue, start the tick.
+  // stop ticking when there's no more messages.
+  useEffect(() => {
+    if (messageList.length) {
+      setStartTick(true);
+    } else {
+      setStartTick(false);
+      setTick(0);
+    }
+  }, [messageList]);
+
+  // on each tick, filter out the messages that shouldn't show yet, or should have already been hiden
   useEffect(() => {
     const timeToShowUp = messageList.filter(message => message.startDelay <= tick) || [];
     if (timeToShowUp.length > messagesShown) {
@@ -45,8 +61,11 @@ function App() {
     }
   }, [tick])
 
+  // do the animation on the crosshair!
   useEffect(() => {
+    // no need to animate if the change was a removal
     if (messagesShown > 0) {
+      // add/remove the fire class to do the animation
       if (crosshair.current?.classList.contains('fire')) {
         crosshair.current?.classList.remove('fire');
         setTimeout(() => {
@@ -66,22 +85,21 @@ function App() {
     }
   }, [messagesShown]);
 
-  useEffect(() => {
-    console.log(messageList);
-    if (messageList.length) {
-      setStartTick(true);
-    } else {
-      setStartTick(false);
-      setTick(0);
-    }
-  }, [messageList]);
 
+  /**
+   * handle receive csv
+   * sets the message list
+   * @param file
+   */
   const handleReceiveCSV = (file: File) => {
     loadCSV(file).then(val => {
       setMessageList(val);
     })
   }
 
+  /**
+   * Loads the test data nd then sets it to the message list
+   */
   const useTestData = () => {
     const testData = require('./assets/testData.csv');
     fetch(testData).then(res => res.text()).then(content => {
@@ -111,13 +129,16 @@ function App() {
               </aside>
             </label>
           }
-
-          {currentMessages.map((mes, index) => {
-            return <p key={index} className='notification'>
-              {mes?.text}
-            </p>
-          })
-          }
+          <div aria-live="polite"
+            aria-atomic="true"
+            aria-relevant="additions">
+            {currentMessages.map((mes, index) => {
+              return <p key={index} className='notification'>
+                {mes?.text}
+              </p>
+            })
+            }
+          </div>
 
         </header>
       </Dropzone>

@@ -6,15 +6,12 @@ const priorityIndex = 1;
 const durationIndex = 2;
 const startDelayIndex = 3;
 
-const failure = [
-  { text: `BIG`, priority: 1, duration: 1400, startDelay: 100 },
-  { text: `BADA`, priority: 2, duration: 1000, startDelay: 500 },
-  { text: `BOOM!!!`, priority: 3, duration: 500, startDelay: 1000 },
-  { text: `You happy?`, priority: 1, duration: 800, startDelay: 1800 },
-  { text: `It's broken now.`, priority: 1, duration: 800, startDelay: 2700 },
-]
-
-export function parseCSV(content: string) {
+/**
+ * Parses csv
+ * @param content
+ * @returns csv content in array format
+ */
+export function parseCSV(content: string): Row[] {
   const rows = content.split('\n');
   const parsedArr = rows.map((row): Row => {
     const values = row.split(',');
@@ -40,16 +37,17 @@ export function parseCSV(content: string) {
   return !!parsedArr.length ? parsedArr : failure
 }
 
+/**
+ * Loads csv
+ * @param file
+ * @returns promise with the csv content
+ */
 export function loadCSV(file: File): Promise<Row[]> {
   return new Promise((resolve, reject) => {
-    console.log('file', file);
     if (file?.type === "text/csv") {
       const reader = new FileReader();
 
       const readerLister = (event: ProgressEvent<FileReader>) => {
-
-        console.log(event.target);
-
         resolve(parseCSV(event.target?.result as string || ''));
         reader.removeEventListener('load', readerLister);
         reader.removeEventListener('error', reject);
@@ -68,3 +66,11 @@ export function loadCSV(file: File): Promise<Row[]> {
   })
 
 }
+// if you upload a bad file, you're just testing me. :P
+const failure = [
+  { text: `BIG`, priority: 1, duration: 1400, startDelay: 100 },
+  { text: `BADA`, priority: 2, duration: 1000, startDelay: 500 },
+  { text: `BOOM!!!`, priority: 3, duration: 500, startDelay: 1000 },
+  { text: `You happy?`, priority: 1, duration: 800, startDelay: 1800 },
+  { text: `It's broken now.`, priority: 1, duration: 800, startDelay: 2700 },
+]

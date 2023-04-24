@@ -1,7 +1,8 @@
 import { ChangeEvent, ReactElement, useEffect, useRef } from "react";
 
 /**
- * Determines whether file received on
+ * Accessible file drop zone
+ * iain eudailey
  * @param {onFileReceived, children}
  * @returns
 */
@@ -19,11 +20,11 @@ export const Dropzone = (
 
   const body = document.querySelector('body');
 
+  // setup drop area listeners
   useEffect(() => {
     const dragOverEnter = (e: any) => {
       e.stopPropagation();
       e.preventDefault();
-
       body?.classList.add('going-through-list');
     }
     const dragLeave = (e: any) => {
@@ -33,7 +34,6 @@ export const Dropzone = (
       e.stopPropagation();
       e.preventDefault();
       const dt = e.dataTransfer;
-      console.log('dt', dt.files);
       const files = [...dt.files];
       onFileReceived(files[0]);
     }
@@ -45,6 +45,10 @@ export const Dropzone = (
   }, [dropForm]);
 
 
+  /**
+   * handles accessible file input
+   * @param event
+   */
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target?.files?.length) {
       onFileReceived(event.target?.files[0]);
