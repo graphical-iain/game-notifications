@@ -83,7 +83,7 @@ function App() {
   }
 
   const useTestData = () => {
-    const testData = require('.assets/testData.csv');
+    const testData = require('./assets/testData.csv');
     fetch(testData).then(res => res.text()).then(content => {
       setMessageList(parseCSV(content));
     })
