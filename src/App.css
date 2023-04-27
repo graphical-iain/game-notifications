@@ -1,3 +1,12 @@
+:root {
+  --rotation: 0deg;
+  --x: 35vmin;
+  --y: 15vmin;
+  --z: -25vmin;
+  --ballCenter: translate3d(var(--x), var(--y), var(--z))
+}
+
+
 body {
   transition: filter 500ms;
 }
@@ -10,16 +19,6 @@ body:not(.going-through-list) {
   text-align: center;
 }
 
-.idleAnimation {
-  height: 40vmin;
-  pointer-events: none;
-  opacity: 0.8;
-  position: fixed;
-  transition: all 200ms;
-  transform: scale(1) translate(0, 0);
-  z-index: -1;
-}
-
 .notification {
   font-size: 2em;
   font-weight: 800;
@@ -27,23 +26,6 @@ body:not(.going-through-list) {
   margin: 0;
   padding: 0;
   line-height: 1;
-}
-
-.App-logo {
-  transition: all 500ms, filter 100ms;
-  height: 40vmin;
-  transform: scale(1);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .idleAnimation.waiting {
-    animation: breathing infinite 20s ease-in-out;
-    filter: grayscale(1);
-  }
-
-  .App-logo.fire {
-    transform: scale(1.1);
-  }
 }
 
 .App-header {
@@ -87,6 +69,10 @@ small {
   color: #61dafb;
 }
 
+
+
+/* animation  */
+
 @keyframes breathing {
 
   0%,
@@ -112,4 +98,125 @@ small {
   75% {
     transform: translate(-1vmin, -2vmin);
   }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate3d(1, 1, 1, 0deg);
+  }
+
+  to {
+    transform: rotate3d(1, 1, 1, 360deg);
+  }
+}
+
+
+@keyframes un-spin {
+  from {
+    transform: rotate3d(1, 1, 1, 360deg) var(--ballCenter);
+  }
+
+  to {
+    transform: rotate3d(1, 1, 1, 0deg) var(--ballCenter);
+  }
+}
+
+
+
+.App-logo {
+  transition: all 500ms, filter 100ms;
+  height: 40vmin;
+  transform: scale(1);
+}
+
+.idleAnimation {
+  perspective: 60vmin;
+  height: 40vmin;
+  width: 40vmin;
+  pointer-events: none;
+  opacity: 0.8;
+  position: fixed;
+  transition: all 500ms;
+  transform: scale(1) translate(0, 0);
+  z-index: -1;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+
+
+
+  /* animation: breathing infinite 20s ease-in-out; */
+  .idleAnimation:not(.fire) {
+    filter: grayscale(1);
+  }
+
+  .idleAnimation.fire {
+    transition: all 100ms;
+    transform: scale(0.95);
+  }
+}
+
+.logo-wrapper {
+
+  position: absolute;
+  transform: rotate3d(1, 1, 1, var(--rotation));
+  animation: rotate 60s infinite linear;
+  height: 40vmin;
+  width: 40vmin;
+  transform-origin: 50% 50% -20vmin;
+  transform-style: preserve-3d;
+}
+
+.idleAnimation.fire .logo-wrapper::after {
+
+  transition: all 100ms;
+  box-shadow: inset -1vmin -1vmin 2vmin rgb(255, 32, 32);
+}
+
+.logo-wrapper::after {
+  transition: all 300ms;
+  content: '';
+  height: 10vmin;
+  width: 10vmin;
+  background-color: rgb(255, 181, 54);
+  transform: rotate3d(1, 1, 1, calc(var(--rotation) * -1)) var(--ballCenter);
+  display: block;
+  position: absolute;
+
+  transform-origin: var(--x) var(--y) var(--z);
+  animation: un-spin 60s linear infinite;
+  border-radius: 50%;
+  box-shadow: inset -1vmin -1vmin 2vmin rgb(125, 1, 1);
+}
+
+.App-logo {
+  position: absolute;
+  background: #09090066;
+}
+
+.side-2 {
+  transform: rotate3d(1, 0, 0, 90deg);
+  transform-origin: bottom;
+}
+
+.side-3 {
+  transform: rotate3d(1, 0, 0, -90deg);
+  transform-origin: top;
+}
+
+.side-4 {
+  transform: rotate3d(0, 1, 0, -90deg);
+  transform-origin: right;
+}
+
+.side-5 {
+  transform: rotate3d(0, 1, 0, 90deg);
+  transform-origin: left;
+}
+
+
+.side-6 {
+  transform: translate3d(0, 0, -40vmin);
+  transform-origin: right;
 }

@@ -66,22 +66,14 @@ function App() {
     // no need to animate if the change was a removal
     if (messagesShown > 0) {
       // add/remove the fire class to do the animation
-      if (crosshair.current?.classList.contains('fire')) {
-        crosshair.current?.classList.remove('fire');
-        setTimeout(() => {
-          crosshair.current?.classList.add('fire');
-
-          setTimeout(() => {
-            crosshair.current?.classList.remove('fire');
-          }, 100);
-        }, 100);
-      } else {
+      crosshair.current?.classList.remove('fire');
+      setTimeout(() => {
         crosshair.current?.classList.add('fire');
 
         setTimeout(() => {
           crosshair.current?.classList.remove('fire');
-        }, 100)
-      }
+        }, 200);
+      }, 10);
     }
   }, [messagesShown]);
 
@@ -111,8 +103,15 @@ function App() {
     <div className="App">
       <Dropzone onFileReceived={handleReceiveCSV}>
         <header className="App-header">
-          <div className={`idleAnimation${!currentMessages.length ? ' waiting' : ''}`}>
-            <img ref={crosshair} src={logo} className="App-logo" alt="logo" />
+          <div ref={crosshair} className={`idleAnimation${!currentMessages.length ? ' waiting' : ''} `}>
+            <div className="logo-wrapper">
+              <img src={logo} className="App-logo side-1" alt="logo" />
+              <img src={logo} className="App-logo side-2" alt="logo" />
+              <img src={logo} className="App-logo side-3" alt="logo" />
+              <img src={logo} className="App-logo side-4" alt="logo" />
+              <img src={logo} className="App-logo side-5" alt="logo" />
+              <img src={logo} className="App-logo side-6" alt="logo" />
+            </div>
           </div>
 
           {!messageList?.length &&
