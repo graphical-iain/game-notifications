@@ -2,7 +2,7 @@
   "name": "game-notifications",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/demos/game-notifications",
+  "homepage": "https://iain.design/demos/game-notifications",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

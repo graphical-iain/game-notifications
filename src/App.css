@@ -136,7 +136,7 @@ small {
   pointer-events: none;
   opacity: 0.8;
   position: fixed;
-  transition: all 500ms;
+  transition: all 600ms;
   transform: scale(1) translate(0, 0);
   z-index: -1;
 }
@@ -148,20 +148,22 @@ small {
 
   /* animation: breathing infinite 20s ease-in-out; */
   .idleAnimation:not(.fire) {
-    filter: grayscale(1);
+    filter: grayscale(1) blur(0.5vmin);
+    ;
   }
 
   .idleAnimation.fire {
     transition: all 100ms;
-    transform: scale(0.95);
+    transform: scale(1.1) rotateX(-5deg) rotateY(5deg) rotateZ(3deg);
   }
 }
 
 .logo-wrapper {
-
+  --rotation-speed: 60s;
+  transition: all 500ms;
   position: absolute;
   transform: rotate3d(1, 1, 1, var(--rotation));
-  animation: rotate 60s infinite linear;
+  animation: rotate var(--rotation-speed) infinite linear;
   height: 40vmin;
   width: 40vmin;
   transform-origin: 50% 50% -20vmin;
@@ -183,7 +185,7 @@ small {
   transform: rotate3d(1, 1, 1, calc(var(--rotation) * -1)) var(--ballCenter);
   display: block;
   position: absolute;
-
+  filter: blur(0.2vmin);
   transform-origin: var(--x) var(--y) var(--z);
   animation: un-spin 60s linear infinite;
   border-radius: 50%;

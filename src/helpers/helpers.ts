@@ -68,9 +68,9 @@ export function loadCSV(file: File): Promise<Row[]> {
 }
 // if you upload a bad file, you're just testing me. :P
 const failure = [
-  { text: `BIG`, priority: 1, duration: 1400, startDelay: 100 },
-  { text: `BADA`, priority: 2, duration: 1000, startDelay: 500 },
-  { text: `BOOM!!!`, priority: 3, duration: 500, startDelay: 1000 },
-  { text: `You happy?`, priority: 1, duration: 800, startDelay: 1800 },
-  { text: `It's broken now.`, priority: 1, duration: 800, startDelay: 2700 },
+  { text: `That`, priority: 1, duration: 1600, startDelay: 0 },
+  { text: `didn't`, priority: 2, duration: 700, startDelay: 900 },
+  { text: `work`, priority: 3, duration: 600, startDelay: 1000 },
+  { text: `Check your file`, priority: 1, duration: 800, startDelay: 2000 },
+  { text: `and try again.`, priority: 1, duration: 800, startDelay: 2900 },
 ]

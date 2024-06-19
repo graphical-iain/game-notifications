@@ -19,6 +19,9 @@ function App() {
   const body = document.querySelector('body');
 
 
+  document.querySelector('body')?.requestFullscreen({ navigationUI: 'hide' });
+
+
   // to ensure all items are displayed, we'll use a time ticker
   useEffect(() => {
     // every tick verify we should continue ticking
@@ -55,6 +58,8 @@ function App() {
     // if there's no messages left to be shown, cleanup
     if (!notAHasbeen.length && timeToShowUp.length >= messageList.length) {
       setMessageList([]);
+
+      document.exitFullscreen();
       setMessagesShown(0);
       const body = document.querySelector('body');
       body?.classList.remove('going-through-list');
@@ -85,6 +90,7 @@ function App() {
    */
   const handleReceiveCSV = (file: File) => {
     loadCSV(file).then(val => {
+      document.querySelector('body')?.requestFullscreen({ navigationUI: 'hide' });
       setMessageList(val);
     })
   }
@@ -94,6 +100,7 @@ function App() {
    */
   const useTestData = () => {
     const testData = require('./assets/testData.csv');
+    document.querySelector('body')?.requestFullscreen({ navigationUI: 'hide' });
     fetch(testData).then(res => res.text()).then(content => {
       setMessageList(parseCSV(content));
     })
